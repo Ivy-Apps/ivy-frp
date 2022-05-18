@@ -12,7 +12,7 @@ plugins {
 
 android {
     //------------------ Android Library Publish ------------------------
-    namespace = "com.ivy.frp"
+//    namespace = "com.ivy.frp"
 
     publishing {
         singleVariant("release") {
