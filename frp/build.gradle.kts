@@ -15,8 +15,8 @@ android {
     namespace = "com.ivy.frp"
 
     publishing {
-        singleVariant("release") {
-            withSourcesJar()
+        multipleVariants {
+            allVariants()
         }
     }
     //------------------ Android Library Publish ------------------------
@@ -33,7 +33,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -65,7 +65,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.ivy"
             artifactId = "frp"
-            version = "0.0.1"
+            version = "0.0.3"
 
             afterEvaluate {
                 from(components["release"])
