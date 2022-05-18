@@ -15,8 +15,8 @@ android {
     namespace = "com.ivy.frp"
 
     publishing {
-        multipleVariants {
-            allVariants()
+        singleVariant("release") {
+            withSourcesJar()
         }
     }
     //------------------ Android Library Publish ------------------------
@@ -65,7 +65,7 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.ivy"
             artifactId = "frp"
-            version = "0.0.3"
+            version = "0.0.4"
 
             afterEvaluate {
                 from(components["release"])
