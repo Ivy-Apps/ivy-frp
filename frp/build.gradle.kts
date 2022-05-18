@@ -6,9 +6,21 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
     id("kotlin-kapt")
+
+    id("maven-publish")
 }
 
 android {
+    //------------------ Android Library Publish ------------------------
+    namespace = "com.ivy.frp"
+
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
+    //------------------ Android Library Publish ------------------------
+
     compileSdk = Project.compileSdkVersion
 
     defaultConfig {
@@ -46,6 +58,22 @@ android {
         //-------------------------------------------------------
     }
 }
+
+//------------------ Android Library Publish ------------------------
+publishing {
+    publications {
+        register<MavenPublication>("release") {
+            groupId = "com.ivy"
+            artifactId = "frp"
+            version = "0.0.1"
+
+            afterEvaluate {
+                from(components["release"])
+            }
+        }
+    }
+}
+//------------------ Android Library Publish ------------------------
 
 dependencies {
     frpModuleDependencies()
