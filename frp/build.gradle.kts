@@ -12,8 +12,6 @@ plugins {
 
 android {
     //------------------ Android Library Publish ------------------------
-//    namespace = "com.ivy.frp"
-
     publishing {
         singleVariant("release") {
             withSourcesJar()
@@ -57,6 +55,16 @@ android {
         resources.excludes.add("META-INF/LGPL2.1")
         //-------------------------------------------------------
     }
+
+    //Compose -----------------------------------------------------------------
+    buildFeatures {
+        compose = true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = com.ivy.frp.buildsrc.GlobalVersions.compose
+    }
+    //Compose -----------------------------------------------------------------
 }
 
 //------------------ Android Library Publish ------------------------
