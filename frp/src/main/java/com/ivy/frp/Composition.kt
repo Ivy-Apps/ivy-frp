@@ -98,11 +98,12 @@ infix fun <B, C> (suspend () -> B).then(act: Action<B, C>): suspend () -> C = {
 
 // -------------------------- suspend (A) -> B ------------------------------------
 //suspend (A) -> B => (B) -> C
-inline infix fun <A, B, C> (suspend (A) -> B).then(crossinline f: (B) -> C): suspend (A) -> C =
-    { a ->
-        val b = this(a)
-        f(b)
-    }
+//inline infix fun <A, B, C> (suspend (A) -> B).then(crossinline f: (B) -> C): suspend (A) -> C =
+//    { a ->
+//        val b = this(a)
+//        f(b)
+//    }
+// ERROR: Ambiguity
 
 //suspend (A) -> B => suspend (B) -> C
 inline infix fun <A, B, C> (suspend (A) -> B).then(
@@ -123,10 +124,11 @@ inline infix fun <A, B, C> (suspend (A) -> B).then(
 
 // -------------------------- Action<A,B> ------------------------------------
 //Action<A,B> => (B) -> C
-inline infix fun <A, B, C> (Action<A, B>).then(crossinline f: (B) -> C): suspend (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+//inline infix fun <A, B, C> (Action<A, B>).then(crossinline f: (B) -> C): suspend (A) -> C = { a ->
+//    val b = this(a)
+//    f(b)
+//}
+//ERROR: Ambiguity
 
 //Action<A,B> => suspend (B) -> C
 inline infix fun <A, B, C> (Action<A, B>).then(crossinline f: suspend (B) -> C): suspend (A) -> C =
