@@ -4,8 +4,6 @@ name: Internal Release
 on:
   # Triggers the workflow on push of version tag
   push:
-    branches:
-      - 'main'
     tags:
       - '*.*.*'
 
