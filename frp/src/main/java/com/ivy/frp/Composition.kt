@@ -19,9 +19,9 @@ import com.ivy.frp.action.Action
 
 // -------------------------- A ------------------------------------
 //A => (A) -> B
-inline infix fun <A, B> A.asParamTo(crossinline f: (A) -> B): () -> B = {
-    f(this)
-}
+//inline infix fun <A, B> A.asParamTo(crossinline f: (A) -> B): () -> B = {
+//    f(this)
+//}
 
 //A => suspend (A) -> B
 inline infix fun <A, B> A.asParamTo(crossinline f: suspend (A) -> B): suspend () -> B = {
@@ -264,4 +264,8 @@ fun <A, B> (Action<A, B>).lambda(): suspend (A) -> B = { a ->
 
 fun <B> (Action<Unit, B>).lambda(): suspend () -> B = {
     this(Unit)
+}
+
+fun <A> (A).lambda(): suspend () -> A = suspend {
+    this
 }
