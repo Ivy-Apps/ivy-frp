@@ -55,5 +55,4 @@ class WeatherViewModel @Inject constructor(
                 is Res.Err -> WeatherState.Error(errReason = it.error)
             }
         }
-
 }
