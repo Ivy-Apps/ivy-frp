@@ -19,12 +19,12 @@ import com.ivy.frp.action.Action
 
 // -------------------------- A ------------------------------------
 //A => (A) -> B
-infix fun <A, B> A.asParamTo(f: (A) -> B): () -> B = {
+inline infix fun <A, B> A.asParamTo(crossinline f: (A) -> B): () -> B = {
     f(this)
 }
 
 //A => suspend (A) -> B
-infix fun <A, B> A.asParamTo(f: suspend (A) -> B): suspend () -> B = {
+inline infix fun <A, B> A.asParamTo(crossinline f: suspend (A) -> B): suspend () -> B = {
     f(this)
 }
 
@@ -36,13 +36,13 @@ infix fun <A, B> A.asParamTo(act: Action<A, B>): suspend () -> B = {
 
 // -------------------------- () -> B ------------------------------------
 //() -> B => (B) -> C
-infix fun <B, C> (() -> B).then(f: (B) -> C): () -> C = {
+inline infix fun <B, C> (() -> B).then(crossinline f: (B) -> C): () -> C = {
     val b = this()
     f(b)
 }
 
 //() -> B => suspend (B) -> C
-infix fun <B, C> (() -> B).then(f: suspend (B) -> C): suspend () -> C = {
+inline infix fun <B, C> (() -> B).then(crossinline f: suspend (B) -> C): suspend () -> C = {
     val b = this()
     f(b)
 }
@@ -56,16 +56,17 @@ infix fun <B, C> (() -> B).then(act: Action<B, C>): suspend () -> C = {
 
 // -------------------------- (A) -> C ------------------------------------
 //(A) -> B => (B) -> C
-infix fun <A, B, C> ((A) -> B).then(f: (B) -> C): (A) -> C = { a ->
+inline infix fun <A, B, C> ((A) -> B).then(crossinline f: (B) -> C): (A) -> C = { a ->
     val b = this(a)
     f(b)
 }
 
 //(A) -> B => suspend (B) -> C
-infix fun <A, B, C> ((A) -> B).then(f: suspend (B) -> C): suspend (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+inline infix fun <A, B, C> ((A) -> B).then(crossinline f: suspend (B) -> C): suspend (A) -> C =
+    { a ->
+        val b = this(a)
+        f(b)
+    }
 
 //(A) -> B => Action<B,C>
 infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
@@ -83,7 +84,7 @@ infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a -
 //Same as: infix fun <A, B, C> ((A) -> B).then(f: (B) -> C): (A) -> C
 
 //suspend () -> B => suspend (B) -> C
-infix fun <B, C> (suspend () -> B).then(f: suspend (B) -> C): suspend () -> C = {
+inline infix fun <B, C> (suspend () -> B).then(crossinline f: suspend (B) -> C): suspend () -> C = {
     val b = this()
     f(b)
 }
@@ -97,16 +98,20 @@ infix fun <B, C> (suspend () -> B).then(act: Action<B, C>): suspend () -> C = {
 
 // -------------------------- suspend (A) -> B ------------------------------------
 //suspend (A) -> B => (B) -> C
-infix fun <A, B, C> (suspend (A) -> B).then(f: (B) -> C): suspend (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+inline infix fun <A, B, C> (suspend (A) -> B).then(crossinline f: (B) -> C): suspend (A) -> C =
+    { a ->
+        val b = this(a)
+        f(b)
+    }
 
 //suspend (A) -> B => suspend (B) -> C
-infix fun <A, B, C> (suspend (A) -> B).then(f: suspend (B) -> C): suspend (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+inline infix fun <A, B, C> (suspend (A) -> B).then(
+    crossinline f: suspend (B) -> C
+): suspend (A) -> C =
+    { a ->
+        val b = this(a)
+        f(b)
+    }
 
 //(A) -> B => Action<B,C>
 //infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
@@ -118,16 +123,17 @@ infix fun <A, B, C> (suspend (A) -> B).then(f: suspend (B) -> C): suspend (A) ->
 
 // -------------------------- Action<A,B> ------------------------------------
 //Action<A,B> => (B) -> C
-infix fun <A, B, C> (Action<A, B>).then(f: (B) -> C): suspend (A) -> C = { a ->
+inline infix fun <A, B, C> (Action<A, B>).then(crossinline f: (B) -> C): suspend (A) -> C = { a ->
     val b = this(a)
     f(b)
 }
 
 //Action<A,B> => suspend (B) -> C
-infix fun <A, B, C> (Action<A, B>).then(f: suspend (B) -> C): suspend (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+inline infix fun <A, B, C> (Action<A, B>).then(crossinline f: suspend (B) -> C): suspend (A) -> C =
+    { a ->
+        val b = this(a)
+        f(b)
+    }
 
 //Action<A,B> => Action<B,C>
 infix fun <A, B, C> (Action<A, B>).then(act: Action<B, C>): suspend (A) -> C = { a ->
@@ -151,13 +157,13 @@ infix fun <A, B, C> (Action<A, B>).then(act: Action<B, C>): suspend (A) -> C = {
 
 //--------------------------- () -> B -----------------------------
 //() -> B => (B) -> C
-infix fun <B, C> (() -> B).thenInvokeAfter(f: (B) -> C): C {
+inline infix fun <B, C> (() -> B).thenInvokeAfter(crossinline f: (B) -> C): C {
     val b = this@thenInvokeAfter()
     return f(b)
 }
 
 //() -> B => suspend (B) -> C
-suspend infix fun <B, C> (() -> B).thenInvokeAfter(f: suspend (B) -> C): C {
+suspend inline infix fun <B, C> (() -> B).thenInvokeAfter(crossinline f: suspend (B) -> C): C {
     val b = this@thenInvokeAfter()
     return f(b)
 }
@@ -189,7 +195,9 @@ suspend infix fun <B, C> (() -> B).thenInvokeAfter(act: Action<B, C>): C {
 //}
 
 //() -> B => suspend (B) -> C
-suspend infix fun <B, C> (suspend () -> B).thenInvokeAfter(f: suspend (B) -> C): C {
+suspend inline infix fun <B, C> (suspend () -> B).thenInvokeAfter(
+    crossinline f: suspend (B) -> C
+): C {
     val b = this@thenInvokeAfter()
     return f(b)
 }

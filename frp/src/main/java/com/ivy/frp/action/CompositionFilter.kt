@@ -1,15 +1,15 @@
 package com.ivy.frp.action
 
-suspend infix fun <A, B> (suspend (A) -> List<B>).thenFilter(
-    predicate: (B) -> Boolean
+suspend inline infix fun <A, B> (suspend (A) -> List<B>).thenFilter(
+    crossinline predicate: (B) -> Boolean
 ): suspend (A) -> List<B> =
     { a ->
         val list = this(a)
         list.filter(predicate)
     }
 
-suspend infix fun <A, B> (Action<A, List<B>>).thenFilter(
-    predicate: (B) -> Boolean
+suspend inline infix fun <A, B> (Action<A, List<B>>).thenFilter(
+    crossinline predicate: (B) -> Boolean
 ): suspend (A) -> List<B> =
     { a ->
         val list = this(a)
@@ -17,8 +17,8 @@ suspend infix fun <A, B> (Action<A, List<B>>).thenFilter(
     }
 
 
-suspend infix fun <B> (suspend () -> List<B>).thenFilter(
-    predicate: suspend (B) -> Boolean
+suspend inline infix fun <B> (suspend () -> List<B>).thenFilter(
+    crossinline predicate: suspend (B) -> Boolean
 ): suspend () -> List<B> =
     {
         val list = this()

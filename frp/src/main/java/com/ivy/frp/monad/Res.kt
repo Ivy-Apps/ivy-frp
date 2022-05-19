@@ -11,14 +11,14 @@ sealed class Res<out E, out T> {
     data class Err<out E>(val error: E) : Res<E, Nothing>()
 }
 
-fun <E, T, S> Res<E, T>.map(f: (Res<E, T>) -> S): S {
+inline fun <E, T, S> Res<E, T>.map(f: (Res<E, T>) -> S): S {
     return f(this)
 }
 
-suspend fun <E, T, T2> tryOp(
-    operation: suspend () -> T,
-    mapError: suspend (Exception) -> E,
-    mapSuccess: suspend (T) -> T2
+suspend inline fun <E, T, T2> tryOp(
+    crossinline operation: suspend () -> T,
+    crossinline mapError: suspend (Exception) -> E,
+    crossinline mapSuccess: suspend (T) -> T2
 ): suspend () -> Res<E, T2> = {
     try {
         operation then mapSuccess thenInvokeAfter { Res.Ok(it) }
@@ -27,8 +27,8 @@ suspend fun <E, T, T2> tryOp(
     }
 }
 
-suspend fun <T> tryOp(
-    operation: suspend () -> T,
+suspend inline fun <T> tryOp(
+    crossinline operation: suspend () -> T,
 ): suspend () -> Res<Exception, T> = {
     try {
         operation thenInvokeAfter { Res.Ok(it) }
@@ -38,8 +38,8 @@ suspend fun <T> tryOp(
 }
 
 // ------------------ mapError --------------------------------------
-suspend infix fun <A, E, T, E2> (suspend (A) -> Res<E, T>).mapError(
-    errorMapping: suspend (E) -> E2
+suspend inline infix fun <A, E, T, E2> (suspend (A) -> Res<E, T>).mapError(
+    crossinline errorMapping: suspend (E) -> E2
 ): suspend (A) -> Res<E2, T> = { a ->
     when (val res = this(a)) {
         is Res.Err<E> -> Res.Err(errorMapping(res.error))
@@ -47,8 +47,8 @@ suspend infix fun <A, E, T, E2> (suspend (A) -> Res<E, T>).mapError(
     }
 }
 
-suspend infix fun <E, T, E2> (suspend () -> Res<E, T>).mapError(
-    errorMapping: suspend (E) -> E2
+suspend inline infix fun <E, T, E2> (suspend () -> Res<E, T>).mapError(
+    crossinline errorMapping: suspend (E) -> E2
 ): suspend () -> Res<E2, T> = {
     when (val res = this()) {
         is Res.Err<E> -> Res.Err(errorMapping(res.error))
@@ -59,8 +59,8 @@ suspend infix fun <E, T, E2> (suspend () -> Res<E, T>).mapError(
 
 
 // ------------------ mapSuccess --------------------------------------
-suspend infix fun <A, E, T, T2> (suspend (A) -> Res<E, T>).mapSuccess(
-    successMapping: suspend (T) -> T2
+suspend inline infix fun <A, E, T, T2> (suspend (A) -> Res<E, T>).mapSuccess(
+    crossinline successMapping: suspend (T) -> T2
 ): suspend (A) -> Res<E, T2> = { a ->
     when (val res = this(a)) {
         is Res.Err<E> -> res
@@ -68,8 +68,8 @@ suspend infix fun <A, E, T, T2> (suspend (A) -> Res<E, T>).mapSuccess(
     }
 }
 
-suspend infix fun <E, T, T2> (suspend () -> Res<E, T>).mapSuccess(
-    successMapping: suspend (T) -> T2
+suspend inline infix fun <E, T, T2> (suspend () -> Res<E, T>).mapSuccess(
+    crossinline successMapping: suspend (T) -> T2
 ): suspend () -> Res<E, T2> = {
     when (val res = this()) {
         is Res.Err<E> -> res

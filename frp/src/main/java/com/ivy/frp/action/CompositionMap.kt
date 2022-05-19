@@ -1,7 +1,7 @@
 package com.ivy.frp.action
 
-suspend infix fun <A, B, C> (suspend (A) -> List<B>).thenMap(
-    transform: suspend (B) -> C
+suspend inline infix fun <A, B, C> (suspend (A) -> List<B>).thenMap(
+    crossinline transform: suspend (B) -> C
 ): suspend (A) -> List<C> =
     { a ->
         val list = this(a)
@@ -10,8 +10,8 @@ suspend infix fun <A, B, C> (suspend (A) -> List<B>).thenMap(
         }
     }
 
-suspend infix fun <B, C> (suspend () -> List<B>).thenMap(
-    transform: suspend (B) -> C
+suspend inline infix fun <B, C> (suspend () -> List<B>).thenMap(
+    crossinline transform: suspend (B) -> C
 ): suspend () -> List<C> =
     {
         val list = this()
@@ -20,8 +20,8 @@ suspend infix fun <B, C> (suspend () -> List<B>).thenMap(
         }
     }
 
-suspend infix fun <B, C> (suspend () -> List<B>).thenFlatMap(
-    transform: suspend (B) -> List<C>
+suspend inline infix fun <B, C> (suspend () -> List<B>).thenFlatMap(
+    crossinline transform: suspend (B) -> List<C>
 ): suspend () -> List<C> =
     {
         val list = this()
@@ -30,7 +30,7 @@ suspend infix fun <B, C> (suspend () -> List<B>).thenFlatMap(
         }
     }
 
-suspend infix fun <B, C> (suspend () -> List<B>).thenMap(
+suspend inline infix fun <B, C> (suspend () -> List<B>).thenMap(
     act: Action<B, C>
 ): suspend () -> List<C> =
     {
@@ -40,8 +40,8 @@ suspend infix fun <B, C> (suspend () -> List<B>).thenMap(
         }
     }
 
-suspend infix fun <A, B, C> (Action<A, List<B>>).thenMap(
-    transform: suspend (B) -> C
+suspend inline infix fun <A, B, C> (Action<A, List<B>>).thenMap(
+    crossinline transform: suspend (B) -> C
 ): suspend (A) -> List<C> =
     { a ->
         val list = this(a)
