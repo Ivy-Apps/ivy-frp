@@ -69,10 +69,11 @@ inline infix fun <A, B, C> ((A) -> B).then(crossinline f: suspend (B) -> C): sus
     }
 
 //(A) -> B => Action<B,C>
-infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
-    val b = this(a)
-    act(b)
-}
+//infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
+//    val b = this(a)
+//    act(b)
+//}
+//ERROR: Ambiguity
 // -------------------------- (A) -> C ------------------------------------
 
 // -------------------------- suspend () -> B ------------------------------------
@@ -115,11 +116,10 @@ inline infix fun <A, B, C> (suspend (A) -> B).then(
     }
 
 //(A) -> B => Action<B,C>
-//infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
-//    val b = this(a)
-//    act(b)
-//}
-//Same as: infix fun <A, B, C> ((A) -> B).then(act: Action<B, C>): suspend (A) -> C
+infix fun <A, B, C> (suspend (A) -> B).then(act: Action<B, C>): suspend (A) -> C = { a ->
+    val b = this(a)
+    act(b)
+}
 // -------------------------- suspend (A) -> B ------------------------------------
 
 // -------------------------- Action<A,B> ------------------------------------
@@ -218,11 +218,23 @@ suspend infix fun <B, C> (suspend () -> B).thenInvokeAfter(act: Action<B, C>): C
 //suspend (A) -> B => Action<B,C>
 //--------------------------- suspend (A) -> B -----------------------------
 
-//--------------------------- Action<A,B> -----------------------------
-//INVALID BECAUSE NO "A"
-//Action<A,B> => (B) -> C
-//Action<A,B> => suspend (B) -> C
+//--------------------------- Action<Unit,B> -----------------------------
+//Action<Unit,B> => (B) -> C
+//Error: Ambiguity
+
+//Action<Unit,B> => suspend (B) -> C
+suspend inline infix fun <B, C> (Action<Unit, B>).thenInvokeAfter(
+    crossinline f: suspend (B) -> C
+): C {
+    val b = this@thenInvokeAfter(Unit)
+    return f(b)
+}
+
 //Action<A,B> => Action<B,C>
+suspend infix fun <B, C> (Action<Unit, B>).thenInvokeAfter(act: Action<B, C>): C {
+    val b = this@thenInvokeAfter(Unit)
+    return act(b)
+}
 //--------------------------- Action<A,B> -----------------------------
 
 //===============================  thenInvokeAfter =============================================
