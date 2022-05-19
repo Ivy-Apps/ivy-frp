@@ -1,5 +1,6 @@
 package com.ivy.frp.monad
 
+import com.ivy.frp.asParamTo
 import com.ivy.frp.then
 import com.ivy.frp.thenInvokeAfter
 
@@ -22,7 +23,7 @@ suspend fun <E, T, T2> tryOp(
     try {
         operation then mapSuccess thenInvokeAfter { Res.Ok(it) }
     } catch (e: Exception) {
-        e then mapError thenInvokeAfter { Res.Err(it) }
+        e asParamTo mapError thenInvokeAfter { Res.Err(it) }
     }
 }
 

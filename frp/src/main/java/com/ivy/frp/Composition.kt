@@ -19,19 +19,17 @@ import com.ivy.frp.action.Action
 
 // -------------------------- A ------------------------------------
 //A => (A) -> B
-//infix fun <A, B> A.then(f: (A) -> B): () -> B = {
-//    f(this)
-//}
-//Note: Ambiguity problems!
-
-//A => suspend (A) -> B
-infix fun <A, B> A.then(f: suspend (A) -> B): suspend () -> B = {
+infix fun <A, B> A.asParamTo(f: (A) -> B): () -> B = {
     f(this)
 }
-//Note: Ambiguity problems! (maybe)
+
+//A => suspend (A) -> B
+infix fun <A, B> A.asParamTo(f: suspend (A) -> B): suspend () -> B = {
+    f(this)
+}
 
 //A => Action<A,B>
-infix fun <A, B> A.then(act: Action<A, B>): suspend () -> B = {
+infix fun <A, B> A.asParamTo(act: Action<A, B>): suspend () -> B = {
     act(this)
 }
 // -------------------------- A ------------------------------------
