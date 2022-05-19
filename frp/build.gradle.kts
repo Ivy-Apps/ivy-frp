@@ -63,9 +63,9 @@ android {
 publishing {
     publications {
         register<MavenPublication>("release") {
-            groupId = "com.ivy"
-            artifactId = "frp"
-            version = "0.0.5"
+            groupId = Project.Lib.groupId
+            artifactId = Project.Lib.artifactId
+            version = Project.Lib.version
 
             afterEvaluate {
                 from(components["release"])

@@ -11,7 +11,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Ivy FRP"
-include(":app")
+include(":sample")
 include(":frp")
 
  

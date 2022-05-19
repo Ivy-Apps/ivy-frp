@@ -1,6 +1,7 @@
 package com.ivy.frp.monad
 
-import com.ivy.frp.action.then
+import com.ivy.frp.then
+import com.ivy.frp.thenInvokeAfter
 
 
 sealed class Res<out E, out T> {
@@ -19,9 +20,9 @@ suspend fun <E, T, T2> tryOp(
     mapSuccess: suspend (T) -> T2
 ): suspend () -> Res<E, T2> = {
     try {
-        (operation then mapSuccess then { Res.Ok(it) }).invoke()
+        operation then mapSuccess thenInvokeAfter { Res.Ok(it) }
     } catch (e: Exception) {
-        ({ e } then mapError then { Res.Err(it) }).invoke()
+        e then mapError thenInvokeAfter { Res.Err(it) }
     }
 }
 
@@ -29,7 +30,7 @@ suspend fun <T> tryOp(
     operation: suspend () -> T,
 ): suspend () -> Res<Exception, T> = {
     try {
-        (operation then { Res.Ok(it) }).invoke()
+        operation thenInvokeAfter { Res.Ok(it) }
     } catch (e: Exception) {
         Res.Err(e)
     }

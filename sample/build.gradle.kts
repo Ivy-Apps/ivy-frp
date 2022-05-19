@@ -14,11 +14,11 @@ android {
     compileSdk = Project.compileSdkVersion
 
     defaultConfig {
-        applicationId = Project.applicationId
+        applicationId = Project.Sample.applicationId
         minSdk = Project.minSdk
         targetSdk = Project.targetSdk
-        versionCode = Project.versionCode
-        versionName = Project.versionName
+        versionCode = Project.Sample.versionCode
+        versionName = Project.Sample.versionName
 
         kapt {
             arguments {

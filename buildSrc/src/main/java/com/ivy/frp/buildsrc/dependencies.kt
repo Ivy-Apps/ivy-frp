@@ -21,17 +21,25 @@ import org.gradle.kotlin.dsl.project
 
 
 object Project {
-    //Version
-    const val versionName = "4.1.2"
-    const val versionCode = 108
+    object Lib {
+        const val groupId = "com.ivy"
+        const val artifactId = "frp"
+        const val version = "0.1.0"
+    }
 
     //Compile SDK & Build Tools
     const val compileSdkVersion = 31
 
     //App
-    const val applicationId = "com.ivy.frp"
     const val minSdk = 28
     const val targetSdk = 30
+
+    object Sample {
+        const val versionName = "1.0.0"
+        const val versionCode = 1
+        const val applicationId = "com.ivy.frpsample"
+    }
+
 }
 
 object GlobalVersions {
