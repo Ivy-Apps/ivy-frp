@@ -35,11 +35,12 @@ infix fun <A, B> A.asParamTo(act: Action<A, B>): suspend () -> B = {
 // -------------------------- A ------------------------------------
 
 // -------------------------- () -> B ------------------------------------
-//() -> B => (B) -> C
-inline infix fun <B, C> (() -> B).then(crossinline f: (B) -> C): () -> C = {
-    val b = this()
-    f(b)
-}
+////() -> B => (B) -> C
+//inline infix fun <B, C> (() -> B).then(crossinline f: (B) -> C): () -> C = {
+//    val b = this()
+//    f(b)
+//}
+//Error: Ambiguity
 
 //() -> B => suspend (B) -> C
 inline infix fun <B, C> (() -> B).then(crossinline f: suspend (B) -> C): suspend () -> C = {
@@ -56,10 +57,11 @@ infix fun <B, C> (() -> B).then(act: Action<B, C>): suspend () -> C = {
 
 // -------------------------- (A) -> C ------------------------------------
 //(A) -> B => (B) -> C
-inline infix fun <A, B, C> ((A) -> B).then(crossinline f: (B) -> C): (A) -> C = { a ->
-    val b = this(a)
-    f(b)
-}
+//inline infix fun <A, B, C> ((A) -> B).then(crossinline f: (B) -> C): (A) -> C = { a ->
+//    val b = this(a)
+//    f(b)
+//}
+//ERROR: Ambiguity
 
 //(A) -> B => suspend (B) -> C
 inline infix fun <A, B, C> ((A) -> B).then(crossinline f: suspend (B) -> C): suspend (A) -> C =
@@ -159,10 +161,11 @@ infix fun <A, B, C> (Action<A, B>).then(act: Action<B, C>): suspend (A) -> C = {
 
 //--------------------------- () -> B -----------------------------
 //() -> B => (B) -> C
-inline infix fun <B, C> (() -> B).thenInvokeAfter(crossinline f: (B) -> C): C {
-    val b = this@thenInvokeAfter()
-    return f(b)
-}
+//inline infix fun <B, C> (() -> B).thenInvokeAfter(crossinline f: (B) -> C): C {
+//    val b = this@thenInvokeAfter()
+//    return f(b)
+//}
+//ERROR: Ambiguity
 
 //() -> B => suspend (B) -> C
 suspend inline infix fun <B, C> (() -> B).thenInvokeAfter(crossinline f: suspend (B) -> C): C {
