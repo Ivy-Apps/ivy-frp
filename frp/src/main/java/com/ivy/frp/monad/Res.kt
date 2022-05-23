@@ -2,7 +2,6 @@ package com.ivy.frp.monad
 
 import com.ivy.frp.action.Action
 import com.ivy.frp.asParamTo
-import com.ivy.frp.then
 import com.ivy.frp.thenInvokeAfter
 
 
@@ -16,23 +15,21 @@ inline fun <E, T, S> Res<E, T>.map(f: (Res<E, T>) -> S): S {
     return f(this)
 }
 
-inline fun <E, T, T2> tryOp(
-    crossinline operation: suspend () -> T,
-    crossinline mapError: suspend (Exception) -> E,
-    crossinline mapSuccess: suspend (T) -> T2
-): suspend () -> Res<E, T2> = {
-    try {
-        operation then mapSuccess thenInvokeAfter { Res.Ok(it) }
-    } catch (e: Exception) {
-        e asParamTo mapError thenInvokeAfter { Res.Err(it) }
-    }
-}
-
 inline fun <T> tryOp(
     crossinline operation: suspend () -> T,
 ): suspend () -> Res<Exception, T> = {
     try {
         operation thenInvokeAfter { Res.Ok(it) }
+    } catch (e: Exception) {
+        Res.Err(e)
+    }
+}
+
+inline fun <A, T> tryOp(
+    crossinline operation: suspend (A) -> T,
+): suspend (A) -> Res<Exception, T> = { a ->
+    try {
+        a asParamTo operation thenInvokeAfter { Res.Ok(it) }
     } catch (e: Exception) {
         Res.Err(e)
     }
