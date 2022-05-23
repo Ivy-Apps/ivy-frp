@@ -25,7 +25,7 @@ inline fun <T> tryOp(
     }
 }
 
-inline fun <A, T> tryOp(
+inline fun <A, T> tryOpWithParam(
     crossinline operation: suspend (A) -> T,
 ): suspend (A) -> Res<Exception, T> = { a ->
     try {
