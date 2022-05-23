@@ -11,15 +11,44 @@ _Recommendation: Use _it alongside Jetpack Compose_._
 
 ## Demo
 
+### Key Features
+
+- Function composition using `then`. _(supporting suspend functions, `Action & FPAction)_
+- `FPAction`: declaritive-style "use-case" which can be composed.
+- `FRPViewModel`: functional-reactive ViewModel implementation,
+  see [Ivy FRP Architecture](https://github.com/ILIYANGERMANOV/ivy-wallet/blob/main/docs/Developer-Guidelines.md)
+  .
+- `@Composable FRP<State, Event>(){ UI() }`: functional-reactive UI implementation in Jetpack
+  Compose.
+- `Res.Ok / Res.Err` result type: monadic result type supporting success and error composition.
+  - `thenIfSuccess`: calls the next function only on success (OK)
+  - `mapSuccess`: maps only the success type if the result is OK
+  - `mapError`: maps only the error type if the result is Err
+
+- (optional) `NavigationRoot` + `Navigation`: navigation component for Jetpack Compose
+  - :warning: to use it with proper back handling you must **override onBackPressed()**
+
+**if you use `Navigation`:**
+
+```Kotlin
+//required only for "NavigationRoot" and "Navigation"
+override fun onBackPressed() {
+  if (!navigation.onBackPressed()) {
+    super.onBackPressed()
+  }
+}
+```
+
 ### Imaginary Weather app :cloud::sunny::umbrella:
 
 > TL;DR: You'll find the code of the entire weather app below. If you're already sold to use Ivy FRP => skip to Installation.
 
 #### Data (boring)
+
 ```Kotlin
 data class Temperature(
-    val value: Float,
-    val unit: TemperatureUnit
+  val value: Float,
+  val unit: TemperatureUnit
 )
 
 enum class TemperatureUnit {
@@ -232,33 +261,6 @@ private fun UI(
 
 Find the full sample **[here](sample/src/main/java/com/ivy/sample/demo/weather)**.
 
-### Key Features
-
-- Function composition using `then`. _(supporting suspend functions, `Action & FPAction)_
-- `FPAction`: declaritive-style "use-case" which can be composed.
-- `FRPViewModel`: functional-reactive ViewModel implementation,
-  see [Ivy FRP Architecture](https://github.com/ILIYANGERMANOV/ivy-wallet/blob/main/docs/Developer-Guidelines.md)
-  .
-- `@Composable FRP<State, Event>(){ UI() }`: functional-reactive UI implementation in Jetpack
-  Compose.
-- `Res.Ok / Res.Err` result type: monadic result type supporting success and error composition.
-    - `thenIfSuccess`: calls the next function only on success (OK)
-    - `mapSuccess`: maps only the success type if the result is OK
-    - `mapError`: maps only the error type if the result is Err
-
-- (optional) `NavigationRoot` + `Navigation`: navigation component for Jetpack Compose
-    - :warning: to use it with proper back handling you must **override onBackPressed()**
-
-**if you use `Navigation`:**
-
-```Kotlin
-//required only for "NavigationRoot" and "Navigation"
-override fun onBackPressed() {
-    if (!navigation.onBackPressed()) {
-        super.onBackPressed()
-    }
-}
-```
 
 ## Installation
 
