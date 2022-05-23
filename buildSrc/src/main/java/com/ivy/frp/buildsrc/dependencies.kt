@@ -24,7 +24,7 @@ object Project {
     object Lib {
         const val groupId = "com.ivy"
         const val artifactId = "frp"
-        const val version = "0.9.1"
+        const val version = "0.9.2"
     }
 
     //Compile SDK & Build Tools
