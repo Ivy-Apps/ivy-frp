@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ConverterViewModel @Inject constructor() : FRPViewModel<ConvState, ConvEvent>() {
     companion object {
-        const val METER_FEET_FACTOR = 3.281f
+        const val METER_FEET_CONST = 3.28084f
     }
 
     //set initial state
@@ -47,8 +47,8 @@ class ConverterViewModel @Inject constructor() : FRPViewModel<ConvState, ConvEve
         updateState { it.copy(result = Some(result)) }
     }
 
-    private fun convertMeterToFeet(meters: Float): Float = meters * METER_FEET_FACTOR
-    private fun convertFeetToMeter(ft: Float): Float = ft / METER_FEET_FACTOR
+    private fun convertMeterToFeet(meters: Float): Float = meters * METER_FEET_CONST
+    private fun convertFeetToMeter(ft: Float): Float = ft / METER_FEET_CONST
 
     private fun formatResult(result: Float): String =
         DecimalFormat("###,###.##").format(result)
