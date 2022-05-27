@@ -16,6 +16,7 @@ import com.ivy.frp.action.Action
 //Action<A,B>
 
 //~ 18 possible combinations
+//Note: Non-suspend variants are skipped because or ambiguity errors
 
 // -------------------------- A ------------------------------------
 //A => (A) -> B

@@ -49,7 +49,7 @@ private fun UI(
                     if (state.conversion == ConvType.METER_TO_FEET) Color.Yellow else Color.Blue
                 ),
                 onClick = {
-                    onEvent(ConvEvent.SetConversionType(ConvType.METER_TO_FEET))
+                    onEvent(ConvEvent.SetConversion(ConvType.METER_TO_FEET))
                 }
             ) {
                 Text(text = "METER TO FEET")
@@ -61,7 +61,7 @@ private fun UI(
                 modifier = Modifier.background(
                     if (state.conversion == ConvType.FEET_TO_METER) Color.Yellow else Color.Blue
                 ),
-                onClick = { onEvent(ConvEvent.SetConversionType(ConvType.FEET_TO_METER)) }
+                onClick = { onEvent(ConvEvent.SetConversion(ConvType.FEET_TO_METER)) }
             ) {
                 Text(text = "FEET TO METER")
             }

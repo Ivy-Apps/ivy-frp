@@ -27,12 +27,12 @@ class ConverterViewModel @Inject constructor() : FRPViewModel<ConvState, ConvEve
     )
 
     override suspend fun handleEvent(event: ConvEvent): suspend () -> ConvState = when (event) {
-        is ConvEvent.SetConversionType -> event asParamTo ::setConversion then ::convert
+        is ConvEvent.SetConversion -> event asParamTo ::setConversion then ::convert
         is ConvEvent.SetValue -> event asParamTo ::setValue
         is ConvEvent.Convert -> stateVal() asParamTo ::convert
     }
 
-    private suspend fun setConversion(event: ConvEvent.SetConversionType) =
+    private suspend fun setConversion(event: ConvEvent.SetConversion) =
         updateState { it.copy(conversion = event.conversion) }
 
     private suspend fun setValue(event: ConvEvent.SetValue) =
