@@ -42,5 +42,5 @@ inline infix fun <A, B, C> ((A) -> Option<B>).thenMaybe2(crossinline f: (B) -> C
         }
     }
 
-inline infix fun <A> ((A) -> Option<Unit>).fixUnit(crossinline f: () -> Unit): (A) -> Unit =
+inline infix fun <A> ((A) -> Option<Unit>).fixUnit2(crossinline f: () -> Unit): (A) -> Unit =
     { _ -> }
