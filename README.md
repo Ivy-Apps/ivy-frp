@@ -307,7 +307,7 @@ repositories {
 **build.gradle.kts (app)**
 
 ```Kotlin
-implementation("com.githubILIYANGERMANOV:ivy-frp:0.0.0")
+implementation("com.github.ILIYANGERMANOV:ivy-frp:0.0.0")
 ```
 
 > Replace 0.0.0 with the latest version from **[Jitpack](https://jitpack.io/#ILIYANGERMANOV/ivy-frp)**.
