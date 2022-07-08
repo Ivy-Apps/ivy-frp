@@ -299,7 +299,7 @@ repositories {
 //...
 ```
 
-#### 2. Add `com.github.ILIYANGERMANOV:ivy-frp:0:0:0` dependency.
+#### 2. Add `com.github.ILIYANGERMANOV:ivy-frp:0.0.0` dependency.
 
 [![](https://jitpack.io/v/ILIYANGERMANOV/ivy-frp.svg)](https://jitpack.io/#ILIYANGERMANOV/ivy-frp) _<
 -- latest version_
@@ -316,7 +316,7 @@ implementation("com.github.ILIYANGERMANOV:ivy-frp:0.0.0")
 
 #### 1. Add `maven(url = "https://jitpack.io")` to repositories.
 
-#### 2. Add `com.github.ILIYANGERMANOV:ivy-frp:0:0:0` dependency.
+#### 2. Add `com.github.ILIYANGERMANOV:ivy-frp:0.0.0` dependency.
 
 [![](https://jitpack.io/v/ILIYANGERMANOV/ivy-frp.svg)](https://jitpack.io/#ILIYANGERMANOV/ivy-frp) _<
 -- latest version_
