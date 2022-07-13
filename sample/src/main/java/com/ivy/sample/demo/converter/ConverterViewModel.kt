@@ -14,13 +14,13 @@ import javax.inject.Inject
 @HiltViewModel
 class ConverterViewModel @Inject constructor() : FRPViewModel<ConvState, ConvEvent>() {
     companion object {
-        const val METER_FEET_CONST = 3.28084f
+        const val METERS_FEET_CONST = 3.28084f
     }
 
     //set initial state
     override val _state: MutableStateFlow<ConvState> = MutableStateFlow(
         ConvState(
-            conversion = ConvType.METER_TO_FEET,
+            conversion = ConvType.METERS_TO_FEET,
             value = 1f,
             result = None
         )
@@ -41,14 +41,14 @@ class ConverterViewModel @Inject constructor() : FRPViewModel<ConvState, ConvEve
     private suspend fun convert(
         state: ConvState
     ) = state.value asParamTo when (stateVal().conversion) {
-        ConvType.METER_TO_FEET -> ::convertMeterToFeet
-        ConvType.FEET_TO_METER -> ::convertFeetToMeter
+        ConvType.METERS_TO_FEET -> ::convertMetersToFeet
+        ConvType.FEET_TO_METERS -> ::convertFeetToMeters
     } then ::formatResult thenInvokeAfter { result ->
         updateState { it.copy(result = Some(result)) }
     }
 
-    private fun convertMeterToFeet(meters: Float): Float = meters * METER_FEET_CONST
-    private fun convertFeetToMeter(ft: Float): Float = ft / METER_FEET_CONST
+    private fun convertMetersToFeet(meters: Float): Float = meters * METERS_FEET_CONST
+    private fun convertFeetToMeters(ft: Float): Float = ft / METERS_FEET_CONST
 
     private fun formatResult(result: Float): String =
         DecimalFormat("###,###.##").format(result)

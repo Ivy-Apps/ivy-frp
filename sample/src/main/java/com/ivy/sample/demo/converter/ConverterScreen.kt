@@ -46,24 +46,24 @@ private fun UI(
         Row {
             Button(
                 modifier = Modifier.background(
-                    if (state.conversion == ConvType.METER_TO_FEET) Color.Yellow else Color.Blue
+                    if (state.conversion == ConvType.METERS_TO_FEET) Color.Yellow else Color.Blue
                 ),
                 onClick = {
-                    onEvent(ConvEvent.SetConversion(ConvType.METER_TO_FEET))
+                    onEvent(ConvEvent.SetConversion(ConvType.METERS_TO_FEET))
                 }
             ) {
-                Text(text = "METER TO FEET")
+                Text(text = "METERS TO FEET")
             }
 
             Spacer(Modifier.width(24.dp))
 
             Button(
                 modifier = Modifier.background(
-                    if (state.conversion == ConvType.FEET_TO_METER) Color.Yellow else Color.Blue
+                    if (state.conversion == ConvType.FEET_TO_METERS) Color.Yellow else Color.Blue
                 ),
-                onClick = { onEvent(ConvEvent.SetConversion(ConvType.FEET_TO_METER)) }
+                onClick = { onEvent(ConvEvent.SetConversion(ConvType.FEET_TO_METERS)) }
             ) {
-                Text(text = "FEET TO METER")
+                Text(text = "FEET TO METERS")
             }
         }
 
@@ -94,8 +94,8 @@ private fun UI(
             is Some -> Text(
                 text = "Result: ${result.value}${
                     when (state.conversion) {
-                        ConvType.METER_TO_FEET -> "ft"
-                        ConvType.FEET_TO_METER -> "m"
+                        ConvType.METERS_TO_FEET -> "ft"
+                        ConvType.FEET_TO_METERS -> "m"
                     }
                 }",
                 style = TextStyle(
@@ -114,7 +114,7 @@ private fun UI(
 private fun Preview() {
     UI(
         state = ConvState(
-            conversion = ConvType.METER_TO_FEET,
+            conversion = ConvType.METERS_TO_FEET,
             value = 1f,
             result = Some("3.28")
         ),
