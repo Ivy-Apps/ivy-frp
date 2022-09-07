@@ -9,6 +9,8 @@ Android. :rocket:
 
 _Recommendation: Use _it alongside Jetpack Compose_._
 
+### :warning: This library is created solely for educational purposes. If you want to follow along the tutorials refer to the Functional Reactive Programming articles on Toptal - [Part 1 (theory)](https://www.toptal.com/android/functional-reactive-programming-part-1) and [Part 2 (demo)](https://www.toptal.com/android/functional-reactive-programming-part-2).
+
 ## Demo
 
 ### Key Features
